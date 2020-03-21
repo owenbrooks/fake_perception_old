@@ -18,23 +18,32 @@ void FakeCostmap::run()
 nav_msgs::OccupancyGrid FakeCostmap::createGrid()
 {
     nav_msgs::OccupancyGrid costmap;
-    costmap.info.resolution = 0.2;
-    costmap.info.width = 10;
-    costmap.info.height = 10;
+    const float resolution = 0.5;
+    const int width = 15;
+    const int height = 15;
+    costmap.info.resolution = resolution;
+    costmap.info.width = width;
+    costmap.info.height = height;
 
     std_msgs::Header header;
     header.stamp = ros::Time::now();
     header.frame_id = "map";
     costmap.header = header;
 
-    for (int i = 0; i < 400; i++)
+    for (int i = 0; i < width; i++)
     {
-        if (i > 150 && i < 250) {
-            costmap.data.push_back(100);
-        } else {
-            costmap.data.push_back(0);
+        for (int j = 0; j < height; j++)
+        {
+            if (8 < j && j < 12 && 3 < i && i < 12)
+            {
+                costmap.data.push_back(100);
+            }
+            else
+            {
+                costmap.data.push_back(0);
+            }
         }
     }
-    
+
     return costmap;
 }
