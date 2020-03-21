@@ -10,6 +10,7 @@ project(fake_perception)
 find_package(catkin REQUIRED COMPONENTS
   autoware_msgs
   nav_msgs
+  tf
   roscpp
 )
 
