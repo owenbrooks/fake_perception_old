@@ -3,7 +3,7 @@
 
 int main(int argc, char **argv)
 {
-    std::cout << "Running fake_perception" << std::endl;
+    ROS_INFO_STREAM("Running fake_perception");
     ros::init(argc, argv, "fake_perception");
     FakeCostmap node;
     node.run();

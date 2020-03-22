@@ -1,12 +1,18 @@
 #include "fake_costmap.h"
+#include "geometry_msgs/PoseWithCovarianceStamped.h"
 
 void FakeCostmap::run()
 {
     ros::NodeHandle n;
 
     ros::Publisher costmap_pub = n.advertise<nav_msgs::OccupancyGrid>("costmap", 1, true);
+    ros::Publisher goal_pose_pub = n.advertise<geometry_msgs::PoseStamped>("move_base_simple/goal", 1, true);
+    ros::Publisher initial_pose_pub = n.advertise<geometry_msgs::PoseWithCovarianceStamped>("initialpose", 1, true);
 
     ros::Rate loop_rate(1);
+
+    const geometry_msgs::PoseWithCovarianceStamped testInitialPose = initialPose(1.0, 2.0);
+    const geometry_msgs::PoseStamped testGoalPose = goalPose(-3.5, -3.5);
 
     tf::TransformBroadcaster br;
     tf::Transform transform;
@@ -19,6 +25,9 @@ void FakeCostmap::run()
         transform.setOrigin(tf::Vector3(-5.0, -5.0, 0.0));
         transform.setRotation(tf::Quaternion(0, 0, 0, 1));
         br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "/map", "/costmap"));
+
+        goal_pose_pub.publish(testGoalPose);
+        initial_pose_pub.publish(testInitialPose);
     }
 }
 
@@ -53,4 +62,26 @@ nav_msgs::OccupancyGrid FakeCostmap::createGrid()
     }
 
     return costmap;
+}
+
+const geometry_msgs::PoseStamped FakeCostmap::goalPose(const float &x, const float &y)
+{
+    geometry_msgs::PoseStamped goalPose;
+    goalPose.pose.position.x = x;
+    goalPose.pose.position.y = y;
+
+    goalPose.header.frame_id = "map";
+
+    return goalPose;
+}
+
+const geometry_msgs::PoseWithCovarianceStamped FakeCostmap::initialPose(const float &x, const float &y)
+{
+    geometry_msgs::PoseWithCovarianceStamped initialPose;
+    initialPose.pose.pose.position.x = x;
+    initialPose.pose.pose.position.y = y;
+
+    initialPose.header.frame_id = "map";
+
+    return initialPose;
 }
