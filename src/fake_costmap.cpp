@@ -11,8 +11,8 @@ void FakeCostmap::run()
 
     ros::Rate loop_rate(1);
 
-    const geometry_msgs::PoseWithCovarianceStamped testInitialPose = initialPose(1.0, 2.0);
-    const geometry_msgs::PoseStamped testGoalPose = goalPose(-3.5, -3.5);
+    const geometry_msgs::PoseWithCovarianceStamped testInitialPose = initialPose(0.0, 0.0);
+    const geometry_msgs::PoseStamped testGoalPose = goalPose(9.0, 9.0);
 
     tf::TransformBroadcaster br;
     tf::Transform transform;
@@ -22,7 +22,7 @@ void FakeCostmap::run()
         nav_msgs::OccupancyGrid costmap = createGrid();
         costmap_pub.publish(costmap);
 
-        transform.setOrigin(tf::Vector3(-5.0, -5.0, 0.0));
+        transform.setOrigin(tf::Vector3(0.0, 0.0, 0.0));
         transform.setRotation(tf::Quaternion(0, 0, 0, 1));
         br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "/map", "/costmap"));
 
