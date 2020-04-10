@@ -6,13 +6,13 @@ void FakeCostmap::run()
     ros::NodeHandle n;
 
     ros::Publisher costmap_pub = n.advertise<nav_msgs::OccupancyGrid>("costmap", 1, true);
-    ros::Publisher goal_pose_pub = n.advertise<geometry_msgs::PoseStamped>("move_base_simple/goal", 1, true);
-    ros::Publisher initial_pose_pub = n.advertise<geometry_msgs::PoseWithCovarianceStamped>("initialpose", 1, true);
+    // ros::Publisher goal_pose_pub = n.advertise<geometry_msgs::PoseStamped>("move_base_simple/goal", 1, true);
+    // ros::Publisher initial_pose_pub = n.advertise<geometry_msgs::PoseWithCovarianceStamped>("initialpose", 1, true);
 
     ros::Rate loop_rate(1);
 
-    const geometry_msgs::PoseWithCovarianceStamped testInitialPose = initialPose(0.0, 0.0);
-    const geometry_msgs::PoseStamped testGoalPose = goalPose(9.0, 9.0);
+    // const geometry_msgs::PoseWithCovarianceStamped testInitialPose = initialPose(0.0, 0.0);
+    // const geometry_msgs::PoseStamped testGoalPose = goalPose(9.0, 9.0);
 
     tf::TransformBroadcaster br;
     tf::Transform transform;
@@ -26,8 +26,8 @@ void FakeCostmap::run()
         transform.setRotation(tf::Quaternion(0, 0, 0, 1));
         br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "/map", "/costmap"));
 
-        goal_pose_pub.publish(testGoalPose);
-        initial_pose_pub.publish(testInitialPose);
+        // goal_pose_pub.publish(testGoalPose);
+        // initial_pose_pub.publish(testInitialPose);
     }
 }
 
