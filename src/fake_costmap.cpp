@@ -4,10 +4,18 @@
 void FakeCostmap::run()
 {
     ros::NodeHandle n;
+    ros::NodeHandle nh("~");
 
     ros::Publisher costmap_pub = n.advertise<nav_msgs::OccupancyGrid>("costmap", 1, true);
     // ros::Publisher goal_pose_pub = n.advertise<geometry_msgs::PoseStamped>("move_base_simple/goal", 1, true);
     // ros::Publisher initial_pose_pub = n.advertise<geometry_msgs::PoseWithCovarianceStamped>("initialpose", 1, true);
+
+    int width;
+    n.param("width", width, 20);
+    int height;
+    n.param("height", height, 20);
+    double resolution;
+    n.param("resolution", resolution, 0.5);
 
     ros::Rate loop_rate(1);
 
