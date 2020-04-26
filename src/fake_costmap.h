@@ -10,7 +10,7 @@ public:
     void run();
 
 private:
-    nav_msgs::OccupancyGrid createGrid();
+    nav_msgs::OccupancyGrid createGrid(const int &width, const int &height, const float &resolution);
     const geometry_msgs::PoseStamped goalPose(const float &x, const float &y);
     const geometry_msgs::PoseWithCovarianceStamped initialPose(const float &x, const float &y);
 };

@@ -11,11 +11,11 @@ void FakeCostmap::run()
     // ros::Publisher initial_pose_pub = n.advertise<geometry_msgs::PoseWithCovarianceStamped>("initialpose", 1, true);
 
     int width;
-    n.param("width", width, 20);
+    n.param("costmap_width", width, 20);
     int height;
-    n.param("height", height, 20);
+    n.param("costmap_height", height, 20);
     double resolution;
-    n.param("resolution", resolution, 0.5);
+    n.param("costmap_resolution", resolution, 0.5);
 
     ros::Rate loop_rate(1);
 
@@ -27,7 +27,7 @@ void FakeCostmap::run()
 
     while (ros::ok())
     {
-        nav_msgs::OccupancyGrid costmap = createGrid();
+        nav_msgs::OccupancyGrid costmap = createGrid(width, height, resolution);
         costmap_pub.publish(costmap);
 
         transform.setOrigin(tf::Vector3(0.0, 0.0, 0.0));
@@ -39,13 +39,10 @@ void FakeCostmap::run()
     }
 }
 
-nav_msgs::OccupancyGrid FakeCostmap::createGrid()
+nav_msgs::OccupancyGrid FakeCostmap::createGrid(const int &width, const int &height, const float &resolution)
 {
     nav_msgs::OccupancyGrid costmap;
-    const float resolution = 0.5;
-    const int width = 20;
-    const int height = 20;
-    costmap.info.resolution = resolution;
+    costmap.info.resolution = (float)resolution;
     costmap.info.width = width;
     costmap.info.height = height;
 

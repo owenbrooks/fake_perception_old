@@ -1,5 +1,5 @@
 <launch> 
     <node pkg="fake_perception" type="fake_perception" name="fake_perception" />
-    <param name="width" type="int" value="50" />
+    <param name="costmap_width" type="int" value="50" />
     <node pkg="rviz" type="rviz" name="rviz" />
 </launch>
