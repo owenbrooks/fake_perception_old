@@ -1,5 +1,23 @@
 <launch> 
-    <node pkg="fake_perception" type="fake_perception" name="fake_perception" />
+    <node pkg="fake_perception" type="fake_perception" name="fake_perception" output="screen"/>
     <param name="costmap_width" type="int" value="50" />
+    <param name="costmap_height" type="int" value="50" />
+    <rosparam param="obstacles">
+    [
+        xPos, yPos, width, height, xPos2, yPos2, vel
+        2, 2, 2, 3, 
+        16, 2, 2, 4,  
+        9, 5, 6, 1,  
+        6, 5, 1, 4,
+        21, 6, 1, 5,
+        11, 8, 6, 3, 
+        3, 8, 1, 7,
+        12, 12, 3, 4,
+        1, 16, 7, 1,
+        17, 18, 3, 3,
+        11, 19, 3, 4,
+        3, 20, 7, 1
+    ]
+    </rosparam>
     <node pkg="rviz" type="rviz" name="rviz" />
 </launch>
